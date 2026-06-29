@@ -32,8 +32,13 @@ The Raspberry Pi software stack is written in Python 3.
 
 ### Installation Steps
 1. SSH into the Raspberry Pi.
-2. Clone the repository: `git clone [repository_url]`
-3. Navigate to the `MAIN CODE/Pi` directory (or wherever the Python source resides).
+2. Clone the repository: `git clone https://github.com/HariTheja21/ReconRover.git`
+3. Navigate to the Raspberry Pi runtime directory:
+   ```bash
+   cd ReconRover
+   cd "MAIN CODE"
+   cd "RASPBERRY PI"
+   ```
 4. Create a virtual environment:
    ```bash
    python -m venv rover_env
