@@ -1,3 +1,42 @@
 {
-  "description": "TODO: JSON schemas for telemetry and command packets"
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Recon Rover V1 Serial Protocol Schema",
+  "description": "JSON schemas for telemetry (ESP32 -> Pi) and command (Pi -> ESP32) packets",
+  
+  "definitions": {
+    "command_packet": {
+      "type": "object",
+      "required": ["type", "command"],
+      "properties": {
+        "type": { "type": "string", "const": "command" },
+        "command": { "type": "string", "enum": ["MOVE", "STOP", "PING"] },
+        "args": {
+          "type": "object",
+          "properties": {
+            "direction": { "type": "string" },
+            "reason": { "type": "string" }
+          }
+        }
+      }
+    },
+    
+    "telemetry_packet": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "const": "telemetry" },
+        "status": { "type": "string" }
+      }
+    },
+    
+    "sensor_packet": {
+      "type": "object",
+      "required": ["type", "sensor", "value"],
+      "properties": {
+        "type": { "type": "string", "const": "sensor" },
+        "sensor": { "type": "string" },
+        "value": { "type": "number" }
+      }
+    }
+  }
 }
