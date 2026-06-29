@@ -1,0 +1,30 @@
+#include <Wire.h>
+
+#define PCA9548A_ADDR 0x70
+
+void selectChannel(uint8_t channel) {
+  Wire.beginTransmission(PCA9548A_ADDR);
+  Wire.write(1 << channel);
+  Wire.endTransmission();
+}
+
+void setup() {
+  Serial.begin(115200);
+  Wire.begin(8, 9);
+
+  Serial.println("PCA9548A Channel Test");
+}
+
+void loop() {
+
+  for (int ch = 0; ch < 8; ch++) {
+
+    selectChannel(ch);
+
+    Serial.print("Channel ");
+    Serial.print(ch);
+    Serial.println(" selected");
+
+    delay(1000);
+  }
+}

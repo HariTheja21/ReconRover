@@ -1,0 +1,25 @@
+#include <ESP32Servo.h>
+
+Servo pan;
+Servo tilt;
+
+void setup() {
+
+  pan.attach(11);
+  tilt.attach(12);
+}
+
+void loop() {
+
+  pan.write(0);
+  tilt.write(180);
+  delay(1000);
+
+  pan.write(90);
+  tilt.write(90);
+  delay(1000);
+
+  pan.write(180);
+  tilt.write(0);
+  delay(1000);
+}

@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+
+# Virtual Environment
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# OS Files
+Thumbs.db
+.DS_Store
+
+# Build Files
+build/
+dist/
+
+# PlatformIO
+.pio/
+
+# ESP-IDF
+sdkconfig
+sdkconfig.old
+build/
+
+# Temporary Files
+*.tmp
+*.bak
+
+# Environment Variables
+.env
+
+
+

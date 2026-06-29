@@ -1,0 +1,93 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+#include <Adafruit_MPU6050.h>
+#include <Adafruit_Sensor.h>
+
+#define SDA_PIN 8
+#define SCL_PIN 9
+
+#define PCA9548A_ADDR 0x70
+#define OLED_ADDR 0x3C
+
+Adafruit_MPU6050 mpu;
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+
+void selectChannel(uint8_t channel) {
+  Wire.beginTransmission(PCA9548A_ADDR);
+  Wire.write(1 << channel);
+  Wire.endTransmission();
+}
+
+void setup() {
+
+  Serial.begin(115200);
+
+  Wire.begin(SDA_PIN, SCL_PIN);
+
+  Serial.println("Recon Rover Integration Test");
+
+  if (!mpu.begin()) {
+    Serial.println("MPU6050 FAILED");
+    while (1);
+  }
+
+  Serial.println("MPU6050 OK");
+
+  selectChannel(0);
+
+  if (!display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR)) {
+    Serial.println("OLED FAILED");
+    while (1);
+  }
+
+  Serial.println("OLED OK");
+
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(10, 20);
+  display.println("ROVER");
+  display.display();
+
+  delay(2000);
+}
+
+void loop() {
+
+  sensors_event_t a, g, temp;
+
+  mpu.getEvent(&a, &g, &temp);
+
+  Serial.print("AX: ");
+  Serial.print(a.acceleration.x);
+
+  Serial.print(" AY: ");
+  Serial.print(a.acceleration.y);
+
+  Serial.print(" AZ: ");
+  Serial.println(a.acceleration.z);
+
+  selectChannel(0);
+
+  display.clearDisplay();
+
+  display.setTextSize(1);
+
+  display.setCursor(0, 0);
+  display.println("RECON ROVER");
+
+  display.setCursor(0, 20);
+  display.print("AX:");
+  display.println(a.acceleration.x, 1);
+
+  display.print("AY:");
+  display.println(a.acceleration.y, 1);
+
+  display.print("AZ:");
+  display.println(a.acceleration.z, 1);
+
+  display.display();
+
+  delay(200);
+}

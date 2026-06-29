@@ -1,0 +1,19 @@
+#define MQ2_PIN 10
+
+void setup() {
+  Serial.begin(115200);
+
+  Serial.println("MQ-2 Test");
+  Serial.println("Warming up...");
+  delay(30000); // 30 sec warmup
+}
+
+void loop() {
+
+  int value = analogRead(MQ2_PIN);
+
+  Serial.print("MQ2: ");
+  Serial.println(value);
+
+  delay(200);
+}

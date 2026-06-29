@@ -1,0 +1,52 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SDA_PIN 8
+#define SCL_PIN 9
+
+#define PCA9548A_ADDR 0x70
+#define OLED_ADDR 0x3C
+
+Adafruit_SSD1306 display(128, 64, &Wire, -1);
+
+void selectChannel(uint8_t channel) {
+  Wire.beginTransmission(PCA9548A_ADDR);
+  Wire.write(1 << channel);
+  Wire.endTransmission();
+}
+
+void setup() {
+
+  Serial.begin(115200);
+  Wire.begin(SDA_PIN, SCL_PIN);
+
+  // LEFT OLED
+  selectChannel(0);
+
+  display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR);
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(10, 20);
+  display.println("LEFT");
+  display.display();
+
+  delay(500);
+
+  // RIGHT OLED
+  selectChannel(1);
+
+  display.begin(SSD1306_SWITCHCAPVCC, OLED_ADDR);
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(SSD1306_WHITE);
+  display.setCursor(10, 20);
+  display.println("RIGHT");
+  display.display();
+
+  Serial.println("Dual OLED OK");
+}
+
+void loop() {
+}

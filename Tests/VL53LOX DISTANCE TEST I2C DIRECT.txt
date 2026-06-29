@@ -1,0 +1,39 @@
+#include <Wire.h>
+#include <Adafruit_VL53L0X.h>
+
+#define SDA_PIN 8
+#define SCL_PIN 9
+
+Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+
+void setup() {
+  Serial.begin(115200);
+  delay(1000);
+
+  Wire.begin(SDA_PIN, SCL_PIN);
+
+  Serial.println("VL53L0X Starting...");
+
+  if (!lox.begin()) {
+    Serial.println("VL53L0X NOT FOUND");
+    while (1);
+  }
+
+  Serial.println("VL53L0X READY");
+}
+
+void loop() {
+
+  VL53L0X_RangingMeasurementData_t measure;
+
+  lox.rangingTest(&measure, false);
+
+  Serial.print("Distance: ");
+  Serial.print(measure.RangeMilliMeter);
+  Serial.print(" mm");
+
+  Serial.print(" | Status: ");
+  Serial.println(measure.RangeStatus);
+
+  delay(100);
+}

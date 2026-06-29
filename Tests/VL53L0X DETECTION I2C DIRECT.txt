@@ -1,0 +1,22 @@
+#include <Wire.h>
+#include <Adafruit_VL53L0X.h>
+
+Adafruit_VL53L0X lox = Adafruit_VL53L0X();
+
+void setup() {
+  Serial.begin(115200);
+
+  Wire.begin(8, 9);
+
+  Serial.println("VL53L0X Test");
+
+  if (!lox.begin()) {
+    Serial.println("VL53L0X NOT FOUND");
+    while (1);
+  }
+
+  Serial.println("VL53L0X OK");
+}
+
+void loop() {
+}
