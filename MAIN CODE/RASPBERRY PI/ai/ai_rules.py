@@ -18,31 +18,27 @@ class AIRuleEngine:
         1. Emergency
         2. Battery Critical
         3. Hazard
-        4. Navigation Blocked
+        4. Obstacle / Nav Blocked
         5. Goal Reached
         6. Exploration
         7. Idle
         """
-        if context.emergency_active:
+        if context.system_health != "OK":
             return AIState.EMERGENCY
             
         if context.battery_critical:
             return AIState.RETURNING
             
-        if context.threat_level in ["HIGH", "CRITICAL"]:
+        if context.hazard_detected:
             return AIState.AVOIDING
             
-        if context.navigation_blocked:
-            return AIState.SCANNING # Could also be AVOIDING depending on logic
+        if context.obstacle_detected:
+            return AIState.SCANNING
             
-        if context.goal_reached:
+        if context.mission_state == "COMPLETED" or context.current_objective == "COMPLETED":
             return AIState.IDLE
             
-        if not context.is_paused:
-            # If no override condition, keep exploring if there is an objective
-            if context.current_objective != "None":
-                return AIState.EXPLORING
-            else:
-                return AIState.IDLE
-                
-        return AIState.PAUSED
+        if context.current_objective != "IDLE" and context.current_objective != "None":
+            return AIState.EXPLORING
+            
+        return AIState.IDLE

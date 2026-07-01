@@ -8,6 +8,7 @@ Translates semantic events into strongly typed CommandPackets.
 from event_bus import MovementRequestEvent, EmergencyStopRequested, HazardDetected, BatteryCritical, RecoveryStarted
 from .command_models import MotorCommand, LEDCommand, OLEDCommand, CommandPacket
 from .command_priority import CommandPriority
+from typing import Dict
 
 class CommandFactory:
     """
@@ -16,55 +17,30 @@ class CommandFactory:
     def __init__(self):
         pass
 
-    def from_movement_request(self, event: MovementRequestEvent) -> MotorCommand:
-        """Maps MovementRequestEvent to MotorCommand."""
-        action_map = {
-            "MoveForward": "fwd",
-            "Reverse": "rev",
-            "RotateLeft": "left",
-            "RotateRight": "right",
-            "Stop": "stop",
-            "Wait": "stop"
-        }
-        
-        protocol_action = action_map.get(event.action, "stop")
-        # Ensure speed factor (0.0 - 1.0) is converted to 0 - 100
-        speed = int(max(0.0, min(1.0, event.speed_factor)) * 100)
-        
+    def from_motor_speeds(self, speeds: Dict[str, float], priority: CommandPriority = CommandPriority.MOTOR) -> MotorCommand:
+        """Maps a left/right speed dict (from MotionPlanner) to a MotorCommand."""
         return MotorCommand(
-            priority=CommandPriority.MOTOR,
-            action=protocol_action,
-            speed=speed
-        )
-
-    def from_emergency_stop(self, event: EmergencyStopRequested) -> MotorCommand:
-        return MotorCommand(
-            priority=CommandPriority.EMERGENCY,
-            action="stop",
-            speed=0
+            priority=priority,
+            mot={"l": speeds.get("l", 0.0), "r": speeds.get("r", 0.0)}
         )
 
     def from_hazard(self, event: HazardDetected) -> LEDCommand:
+        """Maps hazard event to flashing red LED."""
         return LEDCommand(
             priority=CommandPriority.LED,
-            mode="blink",
-            r=255, g=0, b=0
+            led={"m": 1, "r": 255, "g": 0, "b": 0} # mode 1 = blink
         )
 
     def from_battery_critical(self, event: BatteryCritical) -> OLEDCommand:
+        """Maps battery critical to the appropriate eye animation."""
         return OLEDCommand(
             priority=CommandPriority.OLED,
-            line1="BATTERY CRITICAL",
-            line2="System Halting",
-            line3="Recharge Imminent",
-            line4=""
+            eye={"anim": 2} # 2 = battery critical anim
         )
 
     def from_recovery(self, event: RecoveryStarted) -> OLEDCommand:
+        """Maps recovery to the appropriate eye animation."""
         return OLEDCommand(
             priority=CommandPriority.OLED,
-            line1="RECOVERY MODE",
-            line2="Attempting escape",
-            line3="",
-            line4=""
+            eye={"anim": 3} # 3 = recovery anim
         )

@@ -9,9 +9,9 @@ import asyncio
 import time
 from system.lifecycle_manager import BaseModule
 from event_bus import (
-    EventBus, SceneUpdated, SpeechDetected, AudioSceneUpdated, 
-    NavigationUpdated, MissionUpdated, WorldStateUpdated, HealthUpdated, 
-    BatteryCritical, ObstacleAppeared, HazardDetected, ApplicationReady
+    EventBus, SceneUpdated, AudioSceneUpdated, 
+    NavigationStateChanged, MissionUpdated, WorldStateUpdated, HealthReceived, 
+    BatteryCritical, ObstacleAppeared, ObstacleCleared, HazardDetected, HazardCleared
 )
 
 from .ai_context import AIContext
@@ -56,12 +56,18 @@ class AIEngine(BaseModule):
         self.event_bus.subscribe(AudioSceneUpdated, self._on_audio_updated)
         
         # State
-        self.event_bus.subscribe(NavigationUpdated, self._on_nav_updated)
-        self.event_bus.subscribe(MissionUpdated, self._on_mission_updated)
+        self.event_bus.subscribe(NavigationStateChanged, self._on_nav_updated)
+        self.event_bus.subscribe(WorldStateUpdated, self._on_world_state_updated)
         
         # Health & Triggers
-        self.event_bus.subscribe(HealthUpdated, self._on_health_updated)
+        self.event_bus.subscribe(HealthReceived, self._on_health_updated)
         self.event_bus.subscribe(BatteryCritical, self._on_battery_critical)
+        
+        # Obstacles & Hazards
+        self.event_bus.subscribe(ObstacleAppeared, self._on_obstacle_appeared)
+        self.event_bus.subscribe(ObstacleCleared, self._on_obstacle_cleared)
+        self.event_bus.subscribe(HazardDetected, self._on_hazard_detected)
+        self.event_bus.subscribe(HazardCleared, self._on_hazard_cleared)
         
     async def initialize(self):
         self.log.info("AIEngine (Phase 4.5) initialized.")
@@ -87,17 +93,29 @@ class AIEngine(BaseModule):
     async def _on_audio_updated(self, event: AudioSceneUpdated):
         self.context.update_audio(event.semantics)
         
-    async def _on_nav_updated(self, event: NavigationUpdated):
-        self.context.navigation_state = event.state
+    async def _on_nav_updated(self, event: NavigationStateChanged):
+        self.context.navigation_state = event.new_state
         
-    async def _on_mission_updated(self, event: MissionUpdated):
-        self.context.mission_state = event.state
-        
-    async def _on_health_updated(self, event: HealthUpdated):
-        self.context.system_health = event.status
+    async def _on_world_state_updated(self, event: WorldStateUpdated):
+        self.context.world_state = event.state.__dict__ if hasattr(event.state, '__dict__') else {}
+
+    async def _on_health_updated(self, event: HealthReceived):
+        self.context.system_health = event.data.get('status', 'OK')
         
     async def _on_battery_critical(self, event: BatteryCritical):
         self.context.update_battery(critical=True)
+        
+    async def _on_obstacle_appeared(self, event: ObstacleAppeared):
+        self.context.obstacle_detected = True
+
+    async def _on_obstacle_cleared(self, event: ObstacleCleared):
+        self.context.obstacle_detected = False
+        
+    async def _on_hazard_detected(self, event: HazardDetected):
+        self.context.hazard_detected = True
+        
+    async def _on_hazard_cleared(self, event: HazardCleared):
+        self.context.hazard_detected = False
 
     # --- Main Loop ---
     async def _reasoning_loop(self):

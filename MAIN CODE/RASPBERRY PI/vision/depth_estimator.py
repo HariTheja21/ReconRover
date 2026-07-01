@@ -16,7 +16,7 @@ class DepthEstimator(ABC):
         """
         Appends depth/distance information to tracked detections.
         """
-        pass
+        raise NotImplementedError("Subclasses must implement estimate_depth")
 
 class MockDepthEstimator(DepthEstimator):
     def __init__(self):

@@ -27,4 +27,8 @@ class MemorySummarizer:
         
         # If we have too many low importance memories, we could trigger LLM summarization
         if len(candidates) > 50:
-            pass # TODO: Phase 6.0 Integration with LLM for summarization
+            # For Phase 3.7 we skip LLM generation and just cull low importance memories.
+            for candidate in candidates:
+                await self.store.delete(candidate.id)
+                if candidate.id in self.index._cache:
+                    del self.index._cache[candidate.id]

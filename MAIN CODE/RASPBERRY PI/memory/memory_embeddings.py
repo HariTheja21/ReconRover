@@ -11,7 +11,7 @@ from .memory_types import MemoryEntry
 
 class MemoryEmbeddings:
     def __init__(self):
-        pass
+        self.model_loaded = False
 
     def compute_similarity(self, query_tags: List[str], entry: MemoryEntry) -> float:
         """

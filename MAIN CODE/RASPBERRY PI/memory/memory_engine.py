@@ -87,8 +87,15 @@ class MemoryEngine(BaseModule):
         await self._write_and_publish(entry)
         
     async def _on_decision(self, event: DecisionSelected):
-        # We only record high-importance decisions to prevent spam
-        pass
+        if getattr(event, 'importance', 0.0) >= 7.0:
+            entry = MemoryEntry(
+                category="EPISODIC",
+                importance=getattr(event, 'importance', 7.0),
+                tags=["decision", getattr(event, 'action', 'unknown')],
+                summary=f"Crucial decision made: {getattr(event, 'action', 'unknown')}",
+                source_module="AI"
+            )
+            await self._write_and_publish(entry)
 
     async def _write_and_publish(self, entry: MemoryEntry):
         await self.manager.write_memory(entry)

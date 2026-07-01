@@ -18,7 +18,7 @@ class ObjectTracker(ABC):
         Matches current detections against known tracks.
         Assigns UUIDs and expires lost tracks.
         """
-        pass
+        raise NotImplementedError("Subclasses must implement track")
 
 class SimpleTracker(ObjectTracker):
     """A highly simplified, memory-bounded mock tracker."""

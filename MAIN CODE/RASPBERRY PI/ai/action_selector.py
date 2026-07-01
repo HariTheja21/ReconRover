@@ -6,7 +6,10 @@ Translates the prioritized CandidateAction into standard Semantic Events.
 """
 
 from event_bus import (
-    EventBus, MovementRequest, BehaviorRequest, MissionRequest, DecisionUpdated, DecisionConfidenceUpdated, EmergencyDecision
+    EventBus, MovementRequestEvent, EmergencyStopRequested, 
+    DecisionUpdated, DecisionConfidenceUpdated, 
+    ReturnHomeRequested, ExplorationRequested, AvoidObstacleRequested,
+    GoalSelected
 )
 from .ai_blackboard import CandidateAction
 from logger import Logger
@@ -25,20 +28,27 @@ class ActionSelector:
         
         # 2. Map to semantic intents
         if decision.intent == "EmergencyStop":
-            self.event_bus.publish(EmergencyDecision(reason="System Fault"))
-            self.event_bus.publish(MovementRequest(vector=[0, 0, 0]))
+            self.event_bus.publish(EmergencyStopRequested(reason="AI Rule Engine Override"))
+            self.event_bus.publish(MovementRequestEvent(action="Stop", speed_factor=0.0))
             
         elif decision.intent == "ReturnHome":
-            self.event_bus.publish(MissionRequest(command="ReturnToBase"))
+            self.event_bus.publish(ReturnHomeRequested())
             
         elif decision.intent == "Patrol":
-            self.event_bus.publish(BehaviorRequest(behavior="PatrolArea"))
+            self.event_bus.publish(ExplorationRequested())
+            
+        elif decision.intent == "AvoidObstacle":
+            self.event_bus.publish(AvoidObstacleRequested())
+
+        elif decision.intent == "AvoidHazard":
+            # Just issue a halt - Navigation layer could handle recovery
+            self.event_bus.publish(MovementRequestEvent(action="Stop", speed_factor=0.0))
             
         elif decision.intent == "GreetHuman":
-            self.event_bus.publish(BehaviorRequest(behavior="InteractHuman"))
+            self.event_bus.publish(GoalSelected(goal_name="InteractHuman"))
             
         elif decision.intent == "ProcessSpeech":
-            self.event_bus.publish(BehaviorRequest(behavior="Listen", params=decision.parameters))
+            self.event_bus.publish(GoalSelected(goal_name="Listen"))
             
         elif decision.intent == "Idle":
             pass # Do nothing

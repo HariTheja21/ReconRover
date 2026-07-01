@@ -5,7 +5,7 @@ Recon Rover V1 - Command Builder
 Validates CommandPackets before they are queued.
 """
 
-from .command_models import CommandPacket, MotorCommand, ServoCommand, LEDCommand
+from .command_models import CommandPacket, MotorCommand, ServoCommand, LEDCommand, OLEDCommand
 
 class CommandValidator:
     """
@@ -19,21 +19,33 @@ class CommandValidator:
         Returns True if the packet is safe for the hardware.
         """
         if isinstance(packet, MotorCommand):
-            if not (0 <= packet.speed <= 100):
-                return False
-            if packet.action not in ["fwd", "rev", "left", "right", "stop"]:
-                return False
+            mot = packet.mot
+            l = mot.get("l", 0.0)
+            r = mot.get("r", 0.0)
+            if not (-1.0 <= l <= 1.0): return False
+            if not (-1.0 <= r <= 1.0): return False
 
         elif isinstance(packet, ServoCommand):
-            if not (0 <= packet.pan_angle <= 180):
-                return False
-            if not (0 <= packet.tilt_angle <= 180):
-                return False
+            srv = packet.srv
+            p = srv.get("p", 90.0)
+            t = srv.get("t", 90.0)
+            if not (0.0 <= p <= 180.0): return False
+            if not (0.0 <= t <= 180.0): return False
 
         elif isinstance(packet, LEDCommand):
-            if not (0 <= packet.r <= 255): return False
-            if not (0 <= packet.g <= 255): return False
-            if not (0 <= packet.b <= 255): return False
-            if packet.mode not in ["solid", "blink", "pulse"]: return False
+            led = packet.led
+            r = led.get("r", 0)
+            g = led.get("g", 0)
+            b = led.get("b", 0)
+            if not (0 <= r <= 255): return False
+            if not (0 <= g <= 255): return False
+            if not (0 <= b <= 255): return False
+            if led.get("m", 0) not in [0, 1, 2]: return False
+
+        elif isinstance(packet, OLEDCommand):
+            if "anim" not in packet.eye: return False
+            anim = packet.eye.get("anim", 0)
+            if not isinstance(anim, int): return False
+            if not (0 <= anim <= 10): return False
 
         return True

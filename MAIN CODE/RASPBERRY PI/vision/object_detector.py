@@ -17,7 +17,7 @@ class ObjectDetectorInterface(ABC):
     @abstractmethod
     def detect(self, frame: bytes) -> List[Dict]:
         """Returns a list of dicts with 'class', 'confidence', 'bbox'."""
-        pass
+        raise NotImplementedError("Subclasses must implement detect")
 
 class MockDetector(ObjectDetectorInterface):
     """

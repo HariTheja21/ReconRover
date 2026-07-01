@@ -31,6 +31,8 @@ class AIContext:
     battery_level: float = 100.0
     battery_critical: bool = False
     system_health: str = "OK"
+    obstacle_detected: bool = False
+    hazard_detected: bool = False
     
     def update_vision(self, semantics: dict):
         self.vision_semantics = semantics

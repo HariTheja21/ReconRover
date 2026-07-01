@@ -25,12 +25,12 @@ class AudioBuffer:
                 self.stats.record_dropped_chunk()
                 self.log.debug("Audio buffer full. Dropped oldest chunk.")
             except asyncio.QueueEmpty:
-                pass
+                self.log.debug("Queue was concurrently emptied.")
         
         try:
             self.queue.put_nowait(chunk)
         except asyncio.QueueFull:
-            pass
+            self.log.warning("Audio buffer full after eviction. Dropping current chunk.")
             
         self.health.buffer_utilization = self.queue.qsize() / self.queue.maxsize
 

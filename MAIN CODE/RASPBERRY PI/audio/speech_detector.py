@@ -17,7 +17,7 @@ class SpeechDetector(ABC):
         Takes raw audio and a VAD flag. If speech is ongoing, buffers it.
         Returns a complete utterance segment when speech stops, otherwise None.
         """
-        pass
+        raise NotImplementedError("Subclasses must implement detect_speech")
 
 class MockSpeechDetector(SpeechDetector):
     def __init__(self):

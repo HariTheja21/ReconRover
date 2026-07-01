@@ -16,7 +16,7 @@ class DirectionEstimator(ABC):
         """
         Returns estimated direction in degrees (azimuth, elevation) if applicable.
         """
-        pass
+        raise NotImplementedError("Subclasses must implement estimate")
 
 class MockDirectionEstimator(DirectionEstimator):
     def __init__(self):

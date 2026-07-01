@@ -16,7 +16,7 @@ class SpeechRecognizer(ABC):
         """
         Converts an isolated speech segment into transcribed text.
         """
-        pass
+        raise NotImplementedError("Subclasses must implement transcribe")
 
 class MockSpeechRecognizer(SpeechRecognizer):
     def __init__(self):

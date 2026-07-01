@@ -25,12 +25,12 @@ class FrameBuffer:
                 self.stats.record_dropped_frame()
                 self.log.debug("Buffer full. Dropped oldest frame.")
             except asyncio.QueueEmpty:
-                pass
+                self.log.debug("Queue was concurrently emptied.")
         
         try:
             self.queue.put_nowait(frame)
         except asyncio.QueueFull:
-            pass # Shouldn't happen given the check above, but safe
+            self.log.warning("Vision buffer full after eviction. Dropping current frame.")
             
         self.health.buffer_utilization = self.queue.qsize() / self.queue.maxsize
 

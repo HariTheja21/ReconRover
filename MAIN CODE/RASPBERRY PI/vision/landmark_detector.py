@@ -16,7 +16,7 @@ class LandmarkDetector(ABC):
         """
         Extracts keypoints, ORB/SIFT features, or structural markers (doors, signs).
         """
-        pass
+        raise NotImplementedError("Subclasses must implement extract_landmarks")
 
 class MockLandmarkDetector(LandmarkDetector):
     def __init__(self):

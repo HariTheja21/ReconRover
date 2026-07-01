@@ -9,6 +9,12 @@ from dataclasses import dataclass, field
 from .command_priority import CommandPriority
 import time
 
+_seq_counter = 0
+def next_seq():
+    global _seq_counter
+    _seq_counter += 1
+    return _seq_counter
+
 @dataclass(order=True)
 class CommandPacket:
     """
@@ -16,37 +22,25 @@ class CommandPacket:
     """
     priority: CommandPriority
     timestamp_ms: int = field(default_factory=lambda: int(time.time() * 1000), compare=True)
-    command_type: str = field(default="sys", compare=False)
+    v_maj: int = field(default=1, compare=False)
+    seq: int = field(default_factory=next_seq, compare=False)
 
 @dataclass(order=True)
 class MotorCommand(CommandPacket):
-    command_type: str = field(default="mot", compare=False)
-    action: str = field(default="stop", compare=False) # e.g., "fwd", "rev", "left", "right", "stop"
-    speed: int = field(default=0, compare=False)       # 0 to 100
+    mot: dict = field(default_factory=dict, compare=False)
 
 @dataclass(order=True)
 class ServoCommand(CommandPacket):
-    command_type: str = field(default="srv", compare=False)
-    pan_angle: int = field(default=90, compare=False)
-    tilt_angle: int = field(default=90, compare=False)
+    srv: dict = field(default_factory=dict, compare=False)
 
 @dataclass(order=True)
 class LEDCommand(CommandPacket):
-    command_type: str = field(default="led", compare=False)
-    mode: str = field(default="solid", compare=False)
-    r: int = field(default=0, compare=False)
-    g: int = field(default=0, compare=False)
-    b: int = field(default=0, compare=False)
+    led: dict = field(default_factory=dict, compare=False)
 
 @dataclass(order=True)
 class OLEDCommand(CommandPacket):
-    command_type: str = field(default="old", compare=False)
-    line1: str = field(default="", compare=False)
-    line2: str = field(default="", compare=False)
-    line3: str = field(default="", compare=False)
-    line4: str = field(default="", compare=False)
+    eye: dict = field(default_factory=dict, compare=False)
 
 @dataclass(order=True)
 class SystemCommand(CommandPacket):
-    command_type: str = field(default="sys", compare=False)
-    action: str = field(default="ping", compare=False)
+    sys: dict = field(default_factory=lambda: {"action": "ping"}, compare=False)

@@ -16,7 +16,7 @@ class VoiceActivityDetector(ABC):
         """
         Returns True if human vocal activity is detected in the chunk.
         """
-        pass
+        raise NotImplementedError("Subclasses must implement detect_vad")
 
 class MockVAD(VoiceActivityDetector):
     def __init__(self):

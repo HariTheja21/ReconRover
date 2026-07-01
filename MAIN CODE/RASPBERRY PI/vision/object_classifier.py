@@ -17,7 +17,7 @@ class ObjectClassifier(ABC):
         Takes raw detections (e.g., generic 'object' bounding boxes)
         and classifies them into specific categories (e.g., 'Coffee Mug').
         """
-        pass
+        raise NotImplementedError("Subclasses must implement classify")
 
 class MockClassifier(ObjectClassifier):
     def __init__(self):

@@ -17,7 +17,7 @@ class SoundClassifier(ABC):
         Returns a list of classified sounds.
         Supported tags: 'Human voice', 'Vehicle', 'Animal', 'Alarm', 'Explosion', 'Wind', 'Rain', 'Unknown'
         """
-        pass
+        raise NotImplementedError("Subclasses must implement classify")
 
 class MockSoundClassifier(SoundClassifier):
     def __init__(self):

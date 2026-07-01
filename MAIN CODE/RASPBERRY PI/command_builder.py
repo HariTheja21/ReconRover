@@ -16,11 +16,14 @@ from command_builder.command_validator import CommandValidator
 from command_builder.command_queue import CommandQueue
 from command_builder.command_scheduler import CommandScheduler
 from command_builder.command_health import CommandHealthMonitor
+from command_builder.command_priority import CommandPriority
+from motion_planner import MotionPlanner
 
 class CommandBuilder(BaseModule):
     def __init__(self, event_bus: EventBus):
         super().__init__()
         self.event_bus = event_bus
+        self.motion_planner = MotionPlanner()
         self.factory = CommandFactory()
         self.validator = CommandValidator()
         self.queue = CommandQueue(max_size=50)
@@ -66,12 +69,14 @@ class CommandBuilder(BaseModule):
         self.health_monitor.update_queue_depth(self.queue.qsize())
 
     async def _on_movement_request(self, event: MovementRequestEvent):
-        packet = self.factory.from_movement_request(event)
+        speeds = self.motion_planner.process_request(event)
+        packet = self.factory.from_motor_speeds(speeds)
         await self._process_packet(packet)
 
     async def _on_emergency_stop(self, event: EmergencyStopRequested):
         self.health_monitor.record_emergency_stop()
-        packet = self.factory.from_emergency_stop(event)
+        speeds = self.motion_planner.handle_emergency_stop(event)
+        packet = self.factory.from_motor_speeds(speeds, priority=CommandPriority.EMERGENCY)
         await self._process_packet(packet)
 
     async def _on_hazard(self, event: HazardDetected):

@@ -17,7 +17,7 @@ class SoundDetectorInterface(ABC):
     @abstractmethod
     def detect(self, chunk: bytes) -> List[Dict]:
         """Returns a list of dicts with 'class' and 'confidence'."""
-        pass
+        raise NotImplementedError("Subclasses must implement detect")
 
 class MockSoundDetector(SoundDetectorInterface):
     """
