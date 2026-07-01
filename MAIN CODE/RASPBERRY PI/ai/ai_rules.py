@@ -10,7 +10,7 @@ from .ai_state_machine import AIState
 
 class AIRuleEngine:
     def __init__(self):
-        pass
+        self._engine_ready = True
 
     def evaluate(self, context: AIContext) -> AIState:
         """

@@ -12,7 +12,7 @@ class CommandValidator:
     Validates parameter bounds.
     """
     def __init__(self):
-        pass
+        self._validator_ready = True
 
     def validate(self, packet: CommandPacket) -> bool:
         """

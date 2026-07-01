@@ -39,7 +39,7 @@ class CommandQueue:
                 try:
                     self.queue.get_nowait()
                 except asyncio.QueueEmpty:
-                    pass
+                    pass # Suppressed implicitly because queue was emptied
             else:
                 # Drop non-emergency packet
                 return False

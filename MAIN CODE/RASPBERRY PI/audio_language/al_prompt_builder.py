@@ -7,7 +7,7 @@ Optional utility if the AL engine needs to build its own intermediate prompts.
 
 class ALPromptBuilder:
     def __init__(self):
-        pass
+        self._builder_ready = True
         
     def build_summary_prompt(self, raw_audio: str) -> str:
         return f"Summarize this auditory scene: {raw_audio}"

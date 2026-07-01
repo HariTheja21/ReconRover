@@ -15,7 +15,7 @@ class CommandFactory:
     Constructs packets from events.
     """
     def __init__(self):
-        pass
+        self._factory_initialized = True
 
     def from_motor_speeds(self, speeds: Dict[str, float], priority: CommandPriority = CommandPriority.MOTOR) -> MotorCommand:
         """Maps a left/right speed dict (from MotionPlanner) to a MotorCommand."""
