@@ -1,5 +1,5 @@
 # AUTO-GENERATED FILE. DO NOT MODIFY.
-from enum import Enum, IntEnum
+from enum import IntEnum
 
 class OperatingMode(IntEnum):
     STANDBY = 0
@@ -20,6 +20,38 @@ class MissionMode(IntEnum):
     DIAGNOSTICS = 8
     CALIBRATION = 9
 
+class ModuleID(IntEnum):
+    BROADCAST = 0
+    ESP32_ROVER_CORE = 1
+    ESP32_REMOTE = 2
+    RPI_EVENT_BUS = 10
+    RPI_MODE_MANAGER = 11
+    RPI_CONFIG_MANAGER = 12
+    RPI_SAFETY_MANAGER = 13
+    RPI_HEALTH_MANAGER = 14
+    RPI_MOTION_PLANNER = 15
+    RPI_COMMAND_BUILDER = 16
+    RPI_AI_DECISION = 17
+    RPI_VISION_PIPELINE = 18
+    RPI_AUDIO_PIPELINE = 19
+    WEB_DASHBOARD = 50
+    LEGEND_AI_NODE = 60
+
+class PacketPriority(IntEnum):
+    LOW = 0
+    NORMAL = 1
+    HIGH = 2
+    CRITICAL = 3
+
+class CapabilityFlags(IntEnum):
+    NONE = 0
+    HAS_CAMERA = 1 << 0
+    HAS_LIDAR = 1 << 1
+    HAS_AUDIO = 1 << 2
+    HAS_OLED = 1 << 3
+    HAS_AI = 1 << 4
+    HAS_AUTO_NAV = 1 << 5
+
 class CommandType(IntEnum):
     MOTION = 10
     SERVO = 11
@@ -30,6 +62,7 @@ class CommandType(IntEnum):
     SYSTEM = 16
     MISSION = 17
     CONFIG = 18
+    AI_INFERENCE = 19
 
 class TelemetryType(IntEnum):
     HEARTBEAT = 20
@@ -41,6 +74,7 @@ class TelemetryType(IntEnum):
     MOTOR_STATUS = 26
     SERVO_STATUS = 27
     LOG_MESSAGE = 28
+    AI_PREDICTION = 29
 
 class EventType(IntEnum):
     SYSTEM_STARTUP = 100
@@ -50,7 +84,8 @@ class EventType(IntEnum):
     CONFIG_CHANGED = 104
     HARDWARE_FAULT = 105
     SENSOR_READING = 106
-    AI_INFERENCE = 107
+    AI_INFERENCE_READY = 107
+    SAFETY_VIOLATION = 108
 
 class ConnectionState(IntEnum):
     DISCONNECTED = 0
@@ -118,11 +153,11 @@ class SystemState(IntEnum):
     ERROR = 4
 
 class LogLevel(IntEnum):
-    DEBUG = 0
-    INFO = 1
-    WARN = 2
-    ERROR = 3
-    FATAL = 4
+    DEBUG_LOG = 0
+    INFO_LOG = 1
+    WARN_LOG = 2
+    ERROR_LOG = 3
+    FATAL_LOG = 4
 
 class ErrorCode(IntEnum):
     NONE = 0
@@ -133,6 +168,7 @@ class ErrorCode(IntEnum):
     SERVO_OUT_OF_BOUNDS = 13
     BATTERY_LOW = 14
     COMM_TIMEOUT = 15
+    PROTOCOL_MISMATCH = 16
 
 class SensorType(IntEnum):
     IMU = 0
@@ -140,4 +176,4 @@ class SensorType(IntEnum):
     LIDAR = 2
     GAS = 3
     CURRENT = 4
-
+    VISION = 5

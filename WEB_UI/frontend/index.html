@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Ground Station</title>
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="theme-dark">
+    <!-- Global Notifications -->
+    <div id="notification-container" class="notification-container"></div>
+
+    <header class="gs-header">
+        <div class="gs-logo">
+            <span class="logo-text">Recon Rover V2 <span class="version-badge" id="app-version">v2.0.0</span></span>
+        </div>
+        <nav class="gs-nav" id="main-nav">
+            <button class="nav-btn active" data-target="dashboard">Telemetry</button>
+            <button class="nav-btn" data-target="teleop">Controls</button>
+            <button class="nav-btn" data-target="camera">Camera</button>
+            <button class="nav-btn" data-target="mission">Missions</button>
+            <button class="nav-btn" data-target="config">Config & OTA</button>
+            <button class="nav-btn" data-target="diagnostics">Diagnostics</button>
+            <button class="nav-btn" data-target="collab">Team</button>
+            <button class="nav-btn" data-target="security">Security</button>
+        </nav>
+        <div class="gs-actions">
+            <div class="system-status" id="global-status">
+                <span class="status-indicator status-ok"></span> 
+                <span id="status-text">OPERATIONAL</span>
+            </div>
+            <button class="btn-icon" id="btn-logout" title="Logout">⏻</button>
+        </div>
+    </header>
+
+    <div class="gs-workspace">
+        <!-- Dashboard Loader iframe container -->
+        <iframe id="dashboard-frame" class="dashboard-frame" src="index_telemetry.html"></iframe>
+    </div>
+
+    <script src="js/error_handler.js"></script>
+    <script src="js/notification_manager.js"></script>
+    <script src="js/dashboard_loader.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/application.js"></script>
+</body>
+</html>

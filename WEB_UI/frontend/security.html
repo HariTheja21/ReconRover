@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Security & Access Control</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/security.css">
+</head>
+<body class="dark-mode">
+    <header class="app-header">
+        <div class="logo">Recon Rover V2 - Security Center</div>
+        <div class="header-actions">
+            <span class="user-identity" id="current-user">Operator: Admin (<span id="session-timer">60:00</span>)</span>
+            <button class="btn-danger" id="btn-logout">Logout</button>
+        </div>
+    </header>
+
+    <div class="app-container security-layout">
+        <main class="main-content">
+            
+            <div class="security-grid">
+                
+                <!-- Authentication Status -->
+                <section class="panel auth-panel">
+                    <h2>Session Security</h2>
+                    <div class="card">
+                        <div class="stat-row"><span>Token Status:</span> <span class="status-ok">VALID</span></div>
+                        <div class="stat-row"><span>Time Remaining:</span> <span id="time-remaining">3600s</span></div>
+                        <div class="stat-row"><span>RBAC Role:</span> <span class="highlight">Administrator</span></div>
+                        <button class="btn-primary mt-10" id="btn-refresh-token">Refresh Token</button>
+                    </div>
+                </section>
+
+                <!-- User Management -->
+                <section class="panel users-panel">
+                    <h2>User Management</h2>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Role</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="user-table-body">
+                            <!-- Mock Data -->
+                            <tr>
+                                <td>admin</td>
+                                <td>Administrator</td>
+                                <td><span class="status-ok">Active</span></td>
+                                <td><button class="btn-secondary btn-sm">Edit</button></td>
+                            </tr>
+                            <tr>
+                                <td>pilot_1</td>
+                                <td>Pilot</td>
+                                <td><span class="status-error">Locked</span></td>
+                                <td><button class="btn-secondary btn-sm">Unlock</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <button class="btn-primary mt-10" id="btn-add-user">+ Add User</button>
+                </section>
+                
+                <!-- Audit Logs -->
+                <section class="panel audit-panel">
+                    <h2>Security Audit Logs</h2>
+                    <div class="audit-controls">
+                        <input type="text" id="audit-search" placeholder="Search logs..." class="form-input">
+                        <button class="btn-secondary" id="btn-export-audit">Export Logs</button>
+                    </div>
+                    <div class="audit-log-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Actor</th>
+                                    <th>Action</th>
+                                    <th>Target</th>
+                                    <th>Result</th>
+                                </tr>
+                            </thead>
+                            <tbody id="audit-table-body">
+                                <!-- Dynamically Populated -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/session_security.js"></script>
+    <script src="js/audit_viewer.js"></script>
+    <script src="js/user_management.js"></script>
+    <script src="js/password_manager.js"></script>
+    <script src="js/security_dashboard.js"></script>
+    
+</body>
+</html>

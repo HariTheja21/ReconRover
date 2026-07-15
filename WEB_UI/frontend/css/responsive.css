@@ -1,0 +1,27 @@
+/* Responsive adjustments for smaller screens (e.g., toughpads in the field) */
+@media (max-width: 1200px) {
+    .nav-btn {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 900px) {
+    .gs-header {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 10px;
+        gap: 10px;
+    }
+    
+    .gs-nav {
+        order: 3;
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 5px;
+    }
+    
+    .gs-workspace {
+        height: calc(100vh - 100px);
+    }
+}

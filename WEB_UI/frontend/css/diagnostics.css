@@ -1,0 +1,174 @@
+.diag-layout {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    height: 100%;
+}
+
+.nav-tabs {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-tabs li {
+    padding: 15px 20px;
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--text-secondary);
+}
+
+.nav-tabs li.active {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border-left: 4px solid var(--accent-blue);
+    font-weight: bold;
+}
+
+.panel.hidden {
+    display: none;
+}
+
+.panel h2 {
+    color: var(--text-primary);
+    margin-bottom: 20px;
+}
+
+/* Health Grid */
+.health-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.health-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.health-card h3 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    display: inline-block;
+    align-self: flex-start;
+    margin-bottom: 10px;
+}
+
+.status-badge.ok { background-color: var(--status-ok); color: white; }
+.status-badge.warning { background-color: var(--status-warning); color: black; }
+.status-badge.error { background-color: var(--status-error); color: white; }
+.status-badge.offline { background-color: #555; color: white; }
+
+.health-msg {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Logs */
+.log-toolbar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.log-toolbar input[type="text"], .log-toolbar select {
+    padding: 8px;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+}
+
+.log-container {
+    flex: 1;
+    overflow-y: auto;
+    background-color: #000;
+    border-radius: 4px;
+    height: calc(100vh - 200px);
+}
+
+.log-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.log-table th {
+    background-color: #222;
+    color: #ccc;
+    text-align: left;
+    padding: 10px;
+    position: sticky;
+    top: 0;
+}
+
+.log-table td {
+    padding: 6px 10px;
+    border-bottom: 1px solid #222;
+    font-family: monospace;
+    font-size: 0.85rem;
+}
+
+.log-row.trace { color: #888; }
+.log-row.debug { color: #aaa; }
+.log-row.info { color: #00ff00; }
+.log-row.warning { color: orange; }
+.log-row.error { color: #ff5555; font-weight: bold; }
+.log-row.critical { color: white; background-color: #aa0000; font-weight: bold; }
+
+/* Performance */
+.perf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.perf-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.perf-card h3 {
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.perf-value {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--accent-blue);
+}
+
+.btn-primary {
+    background-color: var(--accent-blue);
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn-secondary {
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Teleoperation</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/controls.css">
+</head>
+<body class="dark-mode">
+    <header class="app-header">
+        <div class="logo">Recon Rover V2 - Control Link</div>
+        <div class="header-status">
+            <button id="btn-estop" class="btn-emergency">EMERGENCY STOP</button>
+            <span id="connection-status" class="status-indicator offline">Offline</span>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <main class="main-content control-panel">
+            
+            <section class="control-section">
+                <h2>Control Mode</h2>
+                <div class="toggle-group">
+                    <button class="mode-btn active" id="mode-keyboard">Keyboard</button>
+                    <button class="mode-btn" id="mode-gamepad">Gamepad</button>
+                    <button class="mode-btn" id="mode-virtual">Virtual Joystick</button>
+                </div>
+            </section>
+
+            <section class="control-section virtual-controls" id="virtual-controls-container" style="display: none;">
+                <div class="joystick-wrapper">
+                    <div id="joystick-left" class="joystick">
+                        <div class="joystick-knob"></div>
+                    </div>
+                    <p>Throttle</p>
+                </div>
+                <div class="joystick-wrapper">
+                    <div id="joystick-right" class="joystick">
+                        <div class="joystick-knob"></div>
+                    </div>
+                    <p>Steering</p>
+                </div>
+            </section>
+            
+            <section class="control-section status-readout">
+                <h3>Live Input Data</h3>
+                <p>Command: <span id="out-command">IDLE</span></p>
+                <p>Throttle: <span id="out-throttle">0</span>%</p>
+            </section>
+
+        </main>
+    </div>
+
+    <script src="js/command_sender.js"></script>
+    <script src="js/keyboard_controller.js"></script>
+    <script src="js/gamepad_controller.js"></script>
+    <script src="js/virtual_joystick.js"></script>
+    <script src="js/control_state_manager.js"></script>
+    <script src="js/teleoperation.js"></script>
+</body>
+</html>

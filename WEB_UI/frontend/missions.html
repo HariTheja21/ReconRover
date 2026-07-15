@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Mission Planning</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/missions.css">
+    <!-- Using a CDN for Leaflet.js as requested for lightweight mapping -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+</head>
+<body class="dark-mode">
+    <header class="app-header">
+        <div class="logo">Recon Rover V2 - Mission Planner</div>
+        <div class="header-status">
+            <span id="mission-status" class="status-indicator offline">Idle</span>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <nav class="sidebar">
+            <ul id="mission-list">
+                <li class="sidebar-header">Saved Missions</li>
+                <!-- Populated dynamically -->
+            </ul>
+            <div class="sidebar-actions">
+                <button id="btn-new-mission" class="btn-primary">New Mission</button>
+            </div>
+        </nav>
+
+        <main class="main-content mission-layout">
+            <section class="map-container">
+                <div id="map"></div>
+                <div class="map-overlay">
+                    <button id="btn-add-wp" class="btn-secondary active">Add Waypoints</button>
+                    <button id="btn-edit-wp" class="btn-secondary">Edit Mode</button>
+                </div>
+            </section>
+
+            <aside class="mission-editor">
+                <div class="editor-panel">
+                    <h3>Mission Details</h3>
+                    <div class="form-group">
+                        <label>Mission Name</label>
+                        <input type="text" id="mission-name" placeholder="E.g., Perimeter Patrol">
+                    </div>
+                    <div class="form-group">
+                        <label>Mission Type</label>
+                        <select id="mission-type">
+                            <option>Waypoint Mission</option>
+                            <option>Patrol Mission</option>
+                            <option>Inspection Mission</option>
+                            <option>Exploration Mission</option>
+                        </select>
+                    </div>
+                    
+                    <div class="stats-box">
+                        <p>Waypoints: <span id="stat-wp-count">0</span></p>
+                        <p>Est. Distance: <span id="stat-distance">0 m</span></p>
+                    </div>
+                    
+                    <div class="waypoint-list-container">
+                        <h4>Waypoints</h4>
+                        <ul id="waypoint-list">
+                            <!-- Populated dynamically -->
+                        </ul>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="btn-save" class="btn-primary">Save Mission</button>
+                        <button id="btn-execute" class="btn-execute" disabled>Execute Mission</button>
+                        <button id="btn-cancel" class="btn-cancel" disabled>Cancel</button>
+                    </div>
+                </div>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    
+    <script src="js/mission_validator.js"></script>
+    <script src="js/mission_storage.js"></script>
+    <script src="js/mission_map.js"></script>
+    <script src="js/mission_renderer.js"></script>
+    <script src="js/mission_executor.js"></script>
+    <script src="js/mission_editor.js"></script>
+</body>
+</html>

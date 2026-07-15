@@ -2,46 +2,63 @@
 #ifndef ROVER_CONSTANTS_H
 #define ROVER_CONSTANTS_H
 
-// --- System Constants ---
-constexpr const char* SYSTEM_FIRMWARE_VERSION = "2.0.0";
-constexpr int SYSTEM_PROTOCOL_VERSION = 2;
-constexpr int SYSTEM_MAX_MODULES = 32;
-constexpr int SYSTEM_DEFAULT_TICK_RATE_HZ = 50;
+#include <stdint.h>
 
-// --- Communication Constants ---
-constexpr int COMMUNICATION_BAUD_RATE = 115200;
-constexpr int COMMUNICATION_MAX_PACKET_SIZE = 256;
-constexpr int COMMUNICATION_SYNC_BYTE = 170;
-constexpr int COMMUNICATION_TELEMETRY_PORT = 5000;
-constexpr int COMMUNICATION_COMMAND_PORT = 5001;
+namespace SystemConstants {
+    constexpr const char* FIRMWARE_VERSION = "2.0.0";
+    constexpr uint8_t PROTOCOL_VERSION = 2;
+    constexpr uint8_t MAX_MODULES = 32;
+    constexpr uint16_t DEFAULT_TICK_RATE_HZ = 50;
+    constexpr const char* ROBOT_NAME = "Recon Rover V2";
+    constexpr const char* HARDWARE_REVISION = "RevB";
+}
 
-// --- Safety Constants ---
-constexpr float SAFETY_CRITICAL_BATTERY_V = 6.8;
-constexpr float SAFETY_WARNING_BATTERY_V = 7.2;
-constexpr int SAFETY_MAX_MOTOR_CURRENT_MA = 2000;
-constexpr int SAFETY_EMERGENCY_STOP_DISTANCE_CM = 15;
-constexpr int SAFETY_COMM_TIMEOUT_MS = 1000;
+namespace CommunicationConstants {
+    constexpr uint32_t BAUD_RATE = 115200;
+    constexpr uint16_t MAX_PACKET_SIZE = 256;
+    constexpr uint8_t SYNC_BYTE_1 = 0xAA;
+    constexpr uint8_t SYNC_BYTE_2 = 0x55;
+    constexpr uint16_t TELEMETRY_PORT = 5000;
+    constexpr uint16_t COMMAND_PORT = 5001;
+}
 
-// --- Motion Constants ---
-constexpr int MOTION_MIN_PWM = 0;
-constexpr int MOTION_MAX_PWM = 255;
-constexpr int MOTION_DEFAULT_SPEED = 150;
-constexpr int MOTION_TURN_SPEED = 180;
-constexpr int MOTION_ACCEL_STEP = 10;
+namespace SafetyConstants {
+    constexpr float CRITICAL_BATTERY_V = 6.8f;
+    constexpr float WARNING_BATTERY_V = 7.2f;
+    constexpr uint16_t MAX_MOTOR_CURRENT_MA = 2000;
+    constexpr float EMERGENCY_STOP_DISTANCE_CM = 15.0f;
+    constexpr uint32_t COMM_TIMEOUT_MS = 1000;
+}
 
-// --- Servo Constants ---
-constexpr int SERVO_PAN_MIN = 0;
-constexpr int SERVO_PAN_MAX = 180;
-constexpr int SERVO_PAN_CENTER = 90;
-constexpr int SERVO_TILT_MIN = 30;
-constexpr int SERVO_TILT_MAX = 150;
-constexpr int SERVO_TILT_CENTER = 90;
-constexpr int SERVO_DEFAULT_SPEED = 50;
+namespace MotionConstants {
+    constexpr uint8_t MIN_PWM = 0;
+    constexpr uint8_t MAX_PWM = 255;
+    constexpr uint8_t DEFAULT_SPEED = 150;
+    constexpr uint8_t TURN_SPEED = 180;
+    constexpr uint8_t ACCEL_STEP = 10;
+}
 
-// --- Sensors Constants ---
-constexpr const char* SENSORS_MPU6050_ADDR = 0x68;
-constexpr const char* SENSORS_VL53L0X_ADDR = 0x29;
-constexpr const char* SENSORS_INA219_ADDR = 0x40;
-constexpr const char* SENSORS_PCA9548A_ADDR = 0x70;
+namespace ServoConstants {
+    constexpr uint8_t PAN_MIN = 0;
+    constexpr uint8_t PAN_MAX = 180;
+    constexpr uint8_t PAN_CENTER = 90;
+    constexpr uint8_t TILT_MIN = 30;
+    constexpr uint8_t TILT_MAX = 150;
+    constexpr uint8_t TILT_CENTER = 90;
+    constexpr uint8_t DEFAULT_SPEED = 50;
+}
+
+namespace SensorsConstants {
+    constexpr uint8_t MPU6050_ADDR = 0x68; // Decimal 104
+    constexpr uint8_t VL53L0X_ADDR = 0x29; // Decimal 41
+    constexpr uint8_t INA219_ADDR = 0x40;  // Decimal 64
+    constexpr uint8_t PCA9548A_ADDR = 0x70; // Decimal 112
+}
+
+namespace DeveloperConstants {
+    constexpr bool DEBUG_MODE_ENABLED = true;
+    constexpr bool VERBOSE_SERIAL_LOGGING = false;
+    constexpr uint32_t HEARTBEAT_INTERVAL_MS = 1000;
+}
 
 #endif // ROVER_CONSTANTS_H

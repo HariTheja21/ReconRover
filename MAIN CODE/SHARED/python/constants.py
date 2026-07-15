@@ -5,11 +5,14 @@ class SystemConstants:
     PROTOCOL_VERSION = 2
     MAX_MODULES = 32
     DEFAULT_TICK_RATE_HZ = 50
+    ROBOT_NAME = "Recon Rover V2"
+    HARDWARE_REVISION = "RevB"
 
 class CommunicationConstants:
     BAUD_RATE = 115200
     MAX_PACKET_SIZE = 256
-    SYNC_BYTE = 170
+    SYNC_BYTE_1 = 0xAA
+    SYNC_BYTE_2 = 0x55
     TELEMETRY_PORT = 5000
     COMMAND_PORT = 5001
 
@@ -17,7 +20,7 @@ class SafetyConstants:
     CRITICAL_BATTERY_V = 6.8
     WARNING_BATTERY_V = 7.2
     MAX_MOTOR_CURRENT_MA = 2000
-    EMERGENCY_STOP_DISTANCE_CM = 15
+    EMERGENCY_STOP_DISTANCE_CM = 15.0
     COMM_TIMEOUT_MS = 1000
 
 class MotionConstants:
@@ -42,3 +45,7 @@ class SensorsConstants:
     INA219_ADDR = 0x40
     PCA9548A_ADDR = 0x70
 
+class DeveloperConstants:
+    DEBUG_MODE_ENABLED = True
+    VERBOSE_SERIAL_LOGGING = False
+    HEARTBEAT_INTERVAL_MS = 1000

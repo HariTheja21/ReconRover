@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Diagnostics & Logs</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/diagnostics.css">
+</head>
+<body class="dark-mode">
+    <header class="app-header">
+        <div class="logo">Recon Rover V2 - Diagnostics</div>
+        <div class="header-actions">
+            <button id="btn-generate-report" class="btn-primary">Generate Report</button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <nav class="sidebar">
+            <ul class="nav-tabs">
+                <li class="active" data-target="panel-health">System Health</li>
+                <li data-target="panel-logs">Live Log Viewer</li>
+                <li data-target="panel-perf">Performance</li>
+            </ul>
+        </nav>
+
+        <main class="main-content diag-layout">
+            
+            <!-- System Health Panel -->
+            <section id="panel-health" class="panel active">
+                <h2>Subsystem Status</h2>
+                <div class="health-grid" id="health-grid">
+                    <!-- Populated dynamically -->
+                </div>
+            </section>
+
+            <!-- Live Logs Panel -->
+            <section id="panel-logs" class="panel hidden">
+                <div class="log-toolbar">
+                    <input type="text" id="log-search" placeholder="Search logs...">
+                    <select id="log-level-filter">
+                        <option value="ALL">All Levels</option>
+                        <option value="INFO">INFO</option>
+                        <option value="WARNING">WARNING</option>
+                        <option value="ERROR">ERROR</option>
+                        <option value="CRITICAL">CRITICAL</option>
+                    </select>
+                    <button id="btn-clear-logs" class="btn-secondary">Clear View</button>
+                    <label class="auto-scroll-label"><input type="checkbox" id="chk-autoscroll" checked> Auto-Scroll</label>
+                </div>
+                
+                <div class="log-container">
+                    <table class="log-table">
+                        <thead>
+                            <tr>
+                                <th width="150">Timestamp</th>
+                                <th width="100">Level</th>
+                                <th width="150">Source</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody id="log-body">
+                            <!-- Logs go here -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Performance Panel -->
+            <section id="panel-perf" class="panel hidden">
+                <h2>Runtime Performance</h2>
+                <div class="perf-grid">
+                    <div class="perf-card">
+                        <h3>CPU Usage</h3>
+                        <div class="perf-value"><span id="perf-cpu">0.0</span>%</div>
+                    </div>
+                    <div class="perf-card">
+                        <h3>Memory Usage</h3>
+                        <div class="perf-value"><span id="perf-mem">0.0</span>%</div>
+                    </div>
+                    <div class="perf-card">
+                        <h3>System Temp</h3>
+                        <div class="perf-value"><span id="perf-temp">0.0</span>°C</div>
+                    </div>
+                    <div class="perf-card">
+                        <h3>Network Rx</h3>
+                        <div class="perf-value"><span id="perf-rx">0</span> Kbps</div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    
+    <script src="js/log_filters.js"></script>
+    <script src="js/log_viewer.js"></script>
+    <script src="js/health_dashboard.js"></script>
+    <script src="js/performance_dashboard.js"></script>
+    <script src="js/report_generator.js"></script>
+    <script src="js/diagnostics_dashboard.js"></script>
+    
+    <script>
+        // Simple tab switching logic
+        document.querySelectorAll('.nav-tabs li').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-tabs li').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+                
+                e.target.classList.add('active');
+                document.getElementById(e.target.getAttribute('data-target')).classList.remove('hidden');
+                document.getElementById(e.target.getAttribute('data-target')).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

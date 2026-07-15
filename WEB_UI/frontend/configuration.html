@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Configuration & OTA</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/configuration.css">
+</head>
+<body class="dark-mode">
+    <header class="app-header">
+        <div class="logo">Recon Rover V2 - System Management</div>
+    </header>
+
+    <div class="app-container">
+        
+        <nav class="sidebar">
+            <ul class="nav-tabs">
+                <li class="active" data-target="panel-config">Robot Configuration</li>
+                <li data-target="panel-ota">OTA Firmware Update</li>
+            </ul>
+        </nav>
+
+        <main class="main-content config-layout">
+            
+            <!-- Configuration Panel -->
+            <section id="panel-config" class="panel active">
+                <div class="toolbar">
+                    <button id="btn-save-config" class="btn-primary">Apply Changes</button>
+                    <button id="btn-backup" class="btn-secondary">Create Backup</button>
+                    <button id="btn-restore" class="btn-warning">Restore Defaults</button>
+                </div>
+                
+                <div class="config-grid">
+                    <!-- Motion Limits -->
+                    <div class="config-card">
+                        <h3>Motion Limits</h3>
+                        <div class="form-group">
+                            <label>Max Velocity (m/s)</label>
+                            <input type="number" id="cfg-max-vel" step="0.1" value="1.0">
+                        </div>
+                        <div class="form-group">
+                            <label>Max Acceleration (m/s²)</label>
+                            <input type="number" id="cfg-max-accel" step="0.1" value="0.5">
+                        </div>
+                    </div>
+
+                    <!-- Safety Thresholds -->
+                    <div class="config-card">
+                        <h3>Safety Thresholds</h3>
+                        <div class="form-group">
+                            <label>Obstacle Distance (m)</label>
+                            <input type="number" id="cfg-obs-dist" step="0.1" value="0.5">
+                        </div>
+                        <div class="form-group">
+                            <label>Critical Battery (V)</label>
+                            <input type="number" id="cfg-bat-crit" step="0.1" value="10.5">
+                        </div>
+                    </div>
+
+                    <!-- Communications -->
+                    <div class="config-card">
+                        <h3>Communication</h3>
+                        <div class="form-group">
+                            <label>Heartbeat Interval (ms)</label>
+                            <input type="number" id="cfg-heartbeat" value="1000">
+                        </div>
+                    </div>
+
+                    <!-- Camera -->
+                    <div class="config-card">
+                        <h3>Camera Pipeline</h3>
+                        <div class="form-group">
+                            <label>Target FPS</label>
+                            <input type="number" id="cfg-cam-fps" value="30">
+                        </div>
+                        <div class="form-group">
+                            <label>Resolution</label>
+                            <select id="cfg-cam-res">
+                                <option value="1280x720">720p HQ</option>
+                                <option value="640x480" selected>480p MQ</option>
+                                <option value="320x240">240p LQ</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- OTA Panel -->
+            <section id="panel-ota" class="panel hidden">
+                <div class="ota-container">
+                    <h3>Deploy Firmware / Software Update</h3>
+                    <p class="warning-text">WARNING: Do not interrupt power during OTA deployment. Ensure rover has > 50% battery.</p>
+                    
+                    <div class="upload-zone">
+                        <div class="form-group">
+                            <label>Version Tag</label>
+                            <input type="text" id="ota-version" placeholder="e.g., v2.1.0">
+                        </div>
+                        <div class="form-group">
+                            <label>SHA256 Checksum</label>
+                            <input type="text" id="ota-checksum" placeholder="Optional checksum verification">
+                        </div>
+                        <div class="form-group">
+                            <label>Package File (.bin, .tar.gz)</label>
+                            <input type="file" id="ota-file">
+                        </div>
+                        
+                        <button id="btn-deploy-ota" class="btn-primary" style="margin-top:20px; width:100%;">Upload & Deploy</button>
+                    </div>
+
+                    <div class="progress-zone">
+                        <h4>Deployment Status: <span id="ota-status-text">IDLE</span></h4>
+                        <div class="progress-bar-container">
+                            <div id="ota-progress-bar" class="progress-bar" style="width: 0%;"></div>
+                        </div>
+                        <div class="log-console" id="ota-logs">
+                            > System ready.
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+    
+    <script src="js/configuration_validator.js"></script>
+    <script src="js/configuration_backup.js"></script>
+    <script src="js/configuration_profiles.js"></script>
+    <script src="js/configuration_editor.js"></script>
+    <script src="js/ota_dashboard.js"></script>
+    
+    <script>
+        // Simple tab switching logic
+        document.querySelectorAll('.nav-tabs li').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                document.querySelectorAll('.nav-tabs li').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.panel').forEach(p => p.classList.add('hidden'));
+                
+                e.target.classList.add('active');
+                document.getElementById(e.target.getAttribute('data-target')).classList.remove('hidden');
+                document.getElementById(e.target.getAttribute('data-target')).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

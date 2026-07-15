@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Dashboard</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/widgets.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body class="dark-mode">
+    <header class="app-header">
+        <div class="logo">Recon Rover V2</div>
+        <div class="header-status">
+            <span id="connection-status" class="status-indicator offline">Offline</span>
+            <button id="theme-toggle">Toggle Theme</button>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <nav class="sidebar">
+            <ul>
+                <li class="active"><a href="#telemetry">Telemetry</a></li>
+                <li><a href="#mission">Mission</a></li>
+                <li><a href="#camera">Camera</a></li>
+                <li><a href="#settings">Settings</a></li>
+            </ul>
+        </nav>
+
+        <main class="main-content">
+            <section id="telemetry-panel" class="dashboard-grid">
+                
+                <!-- System Health Widgets -->
+                <div class="widget battery-widget">
+                    <h3>Battery</h3>
+                    <div class="widget-value" id="val-battery">--%</div>
+                    <div class="progress-bar"><div id="bar-battery" class="fill"></div></div>
+                </div>
+
+                <div class="widget cpu-widget">
+                    <h3>CPU Usage</h3>
+                    <div class="widget-value" id="val-cpu">--%</div>
+                    <div class="progress-bar"><div id="bar-cpu" class="fill"></div></div>
+                </div>
+                
+                <div class="widget ram-widget">
+                    <h3>RAM Usage</h3>
+                    <div class="widget-value" id="val-ram">--%</div>
+                    <div class="progress-bar"><div id="bar-ram" class="fill"></div></div>
+                </div>
+
+                <!-- Status Widgets -->
+                <div class="widget status-widget">
+                    <h3>Operating Mode</h3>
+                    <div class="widget-value text-status" id="val-mode">STANDBY</div>
+                </div>
+
+                <div class="widget status-widget">
+                    <h3>Mission Status</h3>
+                    <div class="widget-value text-status" id="val-mission">IDLE</div>
+                </div>
+                
+                <div class="widget status-widget">
+                    <h3>Safety Status</h3>
+                    <div class="widget-value text-status ok" id="val-safety">SAFE</div>
+                </div>
+
+                <!-- Hardware Widgets -->
+                <div class="widget hw-widget">
+                    <h3>ESP32 Status</h3>
+                    <div class="widget-value text-status" id="val-esp32">DISCONNECTED</div>
+                </div>
+                
+                <div class="widget hw-widget">
+                    <h3>Camera Status</h3>
+                    <div class="widget-value text-status" id="val-camera">OFFLINE</div>
+                </div>
+
+                <!-- Camera Stream Placeholder -->
+                <div class="widget camera-stream span-2">
+                    <h3>Live Feed</h3>
+                    <div class="video-placeholder">
+                        <span>Video Stream Offline</span>
+                    </div>
+                </div>
+
+                <!-- Notification Center -->
+                <div class="widget notification-center span-2">
+                    <h3>Notifications</h3>
+                    <ul id="notification-list">
+                        <li>System Initialized.</li>
+                    </ul>
+                </div>
+                
+            </section>
+        </main>
+    </div>
+
+    <footer class="app-footer">
+        <span>Recon Rover Ground Station v2.0.0</span>
+    </footer>
+
+    <script src="js/theme_manager.js"></script>
+    <script src="js/notification_manager.js"></script>
+    <script src="js/widget_manager.js"></script>
+    <script src="js/telemetry_renderer.js"></script>
+    <script src="js/websocket_client.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>

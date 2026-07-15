@@ -1,0 +1,16 @@
+{
+    "system": {
+        "protocol_version": 2,
+        "tick_rate_hz": 60
+    },
+    "safety": {
+        "critical_battery_v": 6.8,
+        "warning_battery_v": 7.2
+    },
+    "motion": {
+        "default_speed": 150
+    },
+    "communication": {
+        "baud_rate": 115200
+    }
+}

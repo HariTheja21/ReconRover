@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Camera Stream</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/camera.css">
+</head>
+<body class="dark-mode">
+    <header class="app-header">
+        <div class="logo">Recon Rover V2 - FPV Link</div>
+        <div class="header-status">
+            <span id="stream-status" class="status-indicator offline">Stream Offline</span>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <main class="main-content camera-layout">
+            
+            <section class="video-container">
+                <canvas id="video-canvas" width="640" height="480"></canvas>
+                <div class="osd-overlay">
+                    <span id="osd-fps">0 FPS</span>
+                    <span id="osd-latency">0 ms</span>
+                </div>
+            </section>
+
+            <aside class="stream-sidebar">
+                <div class="control-panel">
+                    <h3>Stream Controls</h3>
+                    <div class="control-group">
+                        <button id="btn-toggle-stream" class="btn-primary">Start Stream</button>
+                    </div>
+                    <div class="control-group">
+                        <label for="select-quality">Quality:</label>
+                        <select id="select-quality">
+                            <option value="high">High (720p HQ)</option>
+                            <option value="medium" selected>Medium (480p MQ)</option>
+                            <option value="low">Low (240p LQ)</option>
+                        </select>
+                    </div>
+                    <div class="control-group">
+                        <button id="btn-snapshot" class="btn-secondary" disabled>Take Snapshot</button>
+                    </div>
+                </div>
+
+                <div class="stats-panel">
+                    <h3>Stream Statistics</h3>
+                    <p>Resolution: <span id="stat-res">--</span></p>
+                    <p>Bitrate: <span id="stat-bitrate">0</span> kbps</p>
+                    <p>Dropped Frames: <span id="stat-dropped">0</span></p>
+                </div>
+            </aside>
+            
+        </main>
+    </div>
+
+    <script src="js/stream_statistics.js"></script>
+    <script src="js/stream_renderer.js"></script>
+    <script src="js/stream_controls.js"></script>
+    <script src="js/camera_stream.js"></script>
+</body>
+</html>

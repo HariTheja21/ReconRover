@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recon Rover V2 - Operator Collaboration</title>
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/collaboration.css">
+</head>
+<body class="dark-mode">
+    <header class="app-header">
+        <div class="logo">Recon Rover V2 - Command Center</div>
+        <div class="header-actions">
+            <span class="user-identity" id="current-user">Operator: <span id="my-name">Guest</span> (<span id="my-role">Observer</span>)</span>
+        </div>
+    </header>
+
+    <div class="app-container">
+        <!-- Sidebar showing active operators -->
+        <nav class="sidebar presence-sidebar">
+            <h3>Active Operators</h3>
+            <ul id="operator-list" class="operator-list">
+                <!-- Dynamically populated -->
+            </ul>
+        </nav>
+
+        <main class="main-content collab-layout">
+            
+            <div class="collab-grid">
+                
+                <!-- Command Ownership Panel -->
+                <section class="panel ownership-panel">
+                    <h2>Command Ownership</h2>
+                    <div class="resource-card">
+                        <h3>Drive Control (Teleoperation)</h3>
+                        <div class="owner-status">Current Owner: <span id="owner-drive" class="owner-name">None</span></div>
+                        <button class="btn-primary" id="btn-req-drive">Request Control</button>
+                        <button class="btn-secondary" id="btn-rel-drive">Release Control</button>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3>Mission Planning</h3>
+                        <div class="owner-status">Current Owner: <span id="owner-mission" class="owner-name">None</span></div>
+                        <button class="btn-primary" id="btn-req-mission">Request Control</button>
+                        <button class="btn-secondary" id="btn-rel-mission">Release Control</button>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <h3>Camera Gimbal</h3>
+                        <div class="owner-status">Current Owner: <span id="owner-camera" class="owner-name">None</span></div>
+                        <button class="btn-primary" id="btn-req-camera">Request Control</button>
+                        <button class="btn-secondary" id="btn-rel-camera">Release Control</button>
+                    </div>
+                </section>
+
+                <!-- Activity Feed Panel -->
+                <section class="panel activity-panel">
+                    <h2>Live Activity Feed</h2>
+                    <div class="activity-feed" id="activity-feed">
+                        <!-- Dynamically populated -->
+                    </div>
+                </section>
+                
+            </div>
+        </main>
+    </div>
+    
+    <script src="js/role_manager.js"></script>
+    <script src="js/session_manager.js"></script>
+    <script src="js/presence_manager.js"></script>
+    <script src="js/activity_feed.js"></script>
+    <script src="js/collaboration_ui.js"></script>
+    <script src="js/operator_dashboard.js"></script>
+    
+</body>
+</html>
